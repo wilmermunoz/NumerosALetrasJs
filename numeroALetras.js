@@ -1,172 +1,131 @@
-const Unidades = function (num) {
+function unidades(num) {
   switch (num) {
-    case 1:
-      return "UN";
-    case 2:
-      return "DOS";
-    case 3:
-      return "TRES";
-    case 4:
-      return "CUATRO";
-    case 5:
-      return "CINCO";
-    case 6:
-      return "SEIS";
-    case 7:
-      return "SIETE";
-    case 8:
-      return "OCHO";
-    case 9:
-      return "NUEVE";
-    default:
-      return "";
+    case 1: return 'UN';
+    case 2: return 'DOS';
+    case 3: return 'TRES';
+    case 4: return 'CUATRO';
+    case 5: return 'CINCO';
+    case 6: return 'SEIS';
+    case 7: return 'SIETE';
+    case 8: return 'OCHO';
+    case 9: return 'NUEVE';
+    default: return '';
   }
-};
+}
 
-const Decenas = function (num) {
-  let decena = Math.floor(num / 10);
-  let unidad = num - decena * 10;
+function decenas(num) {
+  var decena = Math.floor(num / 10);
+  var unidad = num - (decena * 10);
   switch (decena) {
     case 1:
       switch (unidad) {
-        case 0:
-          return "DIEZ";
-        case 1:
-          return "ONCE";
-        case 2:
-          return "DOCE";
-        case 3:
-          return "TRECE";
-        case 4:
-          return "CATORCE";
-        case 5:
-          return "QUINCE";
-        default:
-          return "DIECI" + Unidades(unidad);
+        case 0: return 'DIEZ';
+        case 1: return 'ONCE';
+        case 2: return 'DOCE';
+        case 3: return 'TRECE';
+        case 4: return 'CATORCE';
+        case 5: return 'QUINCE';
+        default: return 'DIECI' + unidades(unidad);
       }
     case 2:
-      switch (unidad) {
-        case 0:
-          return "VEINTE";
-        default:
-          return "VEINTI" + Unidades(unidad);
-      }
-    case 3:
-      return DecenasY("TREINTA", unidad);
-    case 4:
-      return DecenasY("CUARENTA", unidad);
-    case 5:
-      return DecenasY("CINCUENTA", unidad);
-    case 6:
-      return DecenasY("SESENTA", unidad);
-    case 7:
-      return DecenasY("SETENTA", unidad);
-    case 8:
-      return DecenasY("OCHENTA", unidad);
-    case 9:
-      return DecenasY("NOVENTA", unidad);
-    case 0:
-      return Unidades(unidad);
+      return unidad === 0 ? 'VEINTE' : 'VEINTI' + unidades(unidad);
+    case 3: return decenasY('TREINTA', unidad);
+    case 4: return decenasY('CUARENTA', unidad);
+    case 5: return decenasY('CINCUENTA', unidad);
+    case 6: return decenasY('SESENTA', unidad);
+    case 7: return decenasY('SETENTA', unidad);
+    case 8: return decenasY('OCHENTA', unidad);
+    case 9: return decenasY('NOVENTA', unidad);
+    case 0: return unidades(unidad);
   }
-};
+}
 
-const DecenasY = function (strSin, numUnidades) {
-  return numUnidades > 0 ? strSin + " Y " + Unidades(numUnidades) : strSin;
-};
+function decenasY(strSin, numUnidades) {
+  return numUnidades > 0 ? strSin + ' Y ' + unidades(numUnidades) : strSin;
+}
 
-const Centenas = function (num) {
-  let centenas = Math.floor(num / 100);
-  let decenas = num - centenas * 100;
+function centenas(num) {
+  var centenas = Math.floor(num / 100);
+  var decenasResto = num - (centenas * 100);
   switch (centenas) {
-    case 1:
-      if (decenas > 0) return "CIENTO " + Decenas(decenas);
-      return "CIEN";
-    case 2:
-      return "DOSCIENTOS " + Decenas(decenas);
-    case 3:
-      return "TRESCIENTOS " + Decenas(decenas);
-    case 4:
-      return "CUATROCIENTOS " + Decenas(decenas);
-    case 5:
-      return "QUINIENTOS " + Decenas(decenas);
-    case 6:
-      return "SEISCIENTOS " + Decenas(decenas);
-    case 7:
-      return "SETECIENTOS " + Decenas(decenas);
-    case 8:
-      return "OCHOCIENTOS " + Decenas(decenas);
-    case 9:
-      return "NOVECIENTOS " + Decenas(decenas);
-    default:
-      return Decenas(decenas);
+    case 1: return decenasResto > 0 ? 'CIENTO ' + decenas(decenasResto) : 'CIEN';
+    case 2: return 'DOSCIENTOS ' + decenas(decenasResto);
+    case 3: return 'TRESCIENTOS ' + decenas(decenasResto);
+    case 4: return 'CUATROCIENTOS ' + decenas(decenasResto);
+    case 5: return 'QUINIENTOS ' + decenas(decenasResto);
+    case 6: return 'SEISCIENTOS ' + decenas(decenasResto);
+    case 7: return 'SETECIENTOS ' + decenas(decenasResto);
+    case 8: return 'OCHOCIENTOS ' + decenas(decenasResto);
+    case 9: return 'NOVECIENTOS ' + decenas(decenasResto);
+    default: return decenas(decenasResto);
   }
-};
+}
 
-const Seccion = function (num, divisor, strSingular, strPlural) {
-  let cientos = Math.floor(num / divisor);
-  let resto = num - cientos * divisor;
-  let letras = "";
+function seccion(num, divisor, strSingular, strPlural) {
+  var cientos = Math.floor(num / divisor);
+  var resto = num - (cientos * divisor);
+  var letras = '';
   if (cientos > 0) {
-    letras = cientos > 1 ? Centenas(cientos) + " " + strPlural : strSingular;
-  } else {
-    letras = strSingular;
+    letras = cientos > 1 ? centenas(cientos) + ' ' + strPlural : strSingular;
   }
-  return resto > 0 ? letras + " " : letras;
-};
+  if (resto > 0) {
+    letras += '';
+  }
+  return letras;
+}
 
-const Miles = function (num) {
-  let divisor = 1000;
-  let cientos = Math.floor(num / divisor);
-  let resto = num - cientos * divisor;
-  let strMiles = Seccion(num, divisor, "UN MIL", "MIL");
-  let strCentenas = Centenas(resto);
-  return strMiles === "" || cientos === 0 ? strCentenas : strMiles + " " + strCentenas;
-};
+function miles(num) {
+  var divisor = 1000;
+  var cientos = Math.floor(num / divisor);
+  var resto = num - (cientos * divisor);
+  var strMiles = seccion(num, divisor, 'UN MIL', 'MIL');
+  var strCentenas = centenas(resto);
+  return strMiles === '' || cientos === 0 ? strCentenas : strMiles + ' ' + strCentenas;
+}
 
-const Millones = function (num) {
-  let divisor = 1000000;
-  let cientos = Math.floor(num / divisor);
-  let resto = num - cientos * divisor;
-  let strMillones = Seccion(num, divisor, millon(cientos, true), millon(cientos, false));
-  let strMiles = Miles(resto);
-  return strMillones === "" || cientos === 0 ? strMiles : strMillones + " " + strMiles;
-};
+function millones(num) {
+  var divisor = 1000000;
+  var cientos = Math.floor(num / divisor);
+  var resto = num - (cientos * divisor);
+  var strMillones = seccion(num, divisor, millon(num, true), millon(num, false));
+  var strMiles = miles(resto);
+  return strMillones === '' || cientos === 0 ? strMiles : strMillones + ' ' + strMiles;
+}
 
-const millon = function (num, singular) {
-  let letraMillon = singular ? "UN MILLON" : "MILLONES";
+function millon(num, singular) {
+  var letraMillon = singular ? 'UN MILLON' : 'MILLONES';
   if (num % 1000000 === 0) {
-    letraMillon = letraMillon + " DE";
+    letraMillon += ' DE';
   }
   return letraMillon;
-};
+}
 
-function numerosAletras(num, centavos, currency) {
+function numberAsString(num, centavos, currency) {
+  centavos = centavos || false;
   currency = currency || {};
-  let data = {
+  var data = {
     numero: num,
     enteros: Math.floor(num),
     centavos: centavos ? Math.round((num - Math.floor(num)) * 100) : 0,
-    letrasCentavos: "",
-    letrasMonedaPlural: currency.plural || "PESOS",
-    letrasMonedaSingular: currency.singular || "PESO",
-    letrasMonedaCentavoPlural: currency.centPlural || "CENTAVOS",
-    letrasMonedaCentavoSingular: currency.centSingular || "CENTAVO"
+    letrasCentavos: '',
+    letrasMonedaPlural: currency.plural || 'PESOS',
+    letrasMonedaSingular: currency.singular || 'PESO',
+    letrasMonedaCentavoPlural: currency.centPlural || 'CENTAVOS',
+    letrasMonedaCentavoSingular: currency.centSingular || 'CENTAVO'
   };
 
   if (data.centavos > 0) {
-    let letrasCentavos =
-      data.centavos === 1
-        ? Millones(data.centavos) + " " + data.letrasMonedaCentavoSingular
-        : Millones(data.centavos) + " " + data.letrasMonedaCentavoPlural;
-    data.letrasCentavos = "CON " + letrasCentavos;
+    var centavosTexto = data.centavos === 1
+      ? millones(data.centavos) + ' ' + data.letrasMonedaCentavoSingular
+      : millones(data.centavos) + ' ' + data.letrasMonedaCentavoPlural;
+    data.letrasCentavos = 'CON ' + centavosTexto;
   }
 
   if (data.enteros === 0) {
-    return "CERO " + data.letrasMonedaPlural + " " + data.letrasCentavos;
+    return 'CERO ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
   }
   if (data.enteros === 1) {
-    return Millones(data.enteros) + " " + data.letrasMonedaSingular + " " + data.letrasCentavos;
-  } else {
-    return Millones(data.enteros) + " " + data.letrasMonedaPlural + " " + data.letrasCentavos;
+    return millones(data.enteros) + ' ' + data.letrasMonedaSingular + ' ' + data.letrasCentavos;
   }
-};
+  return millones(data.enteros) + ' ' + data.letrasMonedaPlural + ' ' + data.letrasCentavos;
+}
