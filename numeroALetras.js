@@ -18,7 +18,7 @@ function numeroALetras(numero) {
   };
 
   function convertirSeccion(num) {
-    if (num === 0) return "cero";
+    if (num === 0) return "";
     if (num in especiales) return especiales[num];
     const c = Math.floor(num / 100);
     const d = Math.floor((num % 100) / 10);
@@ -33,7 +33,9 @@ function numeroALetras(numero) {
     const niveles = ["", "mil", "millón", "mil millones", "billón"];
     const texto = convertirSeccion(grupo);
     if (!texto) return "";
-    return `${texto} ${nivel > 0 && texto !== "uno" ? niveles[nivel] + "es" : niveles[nivel]}`.trim();
+    if (nivel === 0) return texto;
+    if (nivel === 1) return texto === "uno" ? "mil" : `${texto} mil`;
+    return `${texto} ${nivel > 1 && texto === "uno" ? niveles[nivel] : niveles[nivel] + (grupo > 1 ? "es" : "")}`;
   }
 
   function convertirEntero(num) {
