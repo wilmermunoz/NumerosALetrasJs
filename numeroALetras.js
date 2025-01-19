@@ -140,7 +140,7 @@ const millon = function (num, singular) {
   return letraMillon;
 };
 
-const NumberAsString = function (num, centavos, currency) {
+function numerosAletras(num, centavos, currency) {
   currency = currency || {};
   let data = {
     numero: num,
